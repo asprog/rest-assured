@@ -1,5 +1,10 @@
+package com.tests;
+
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
+import io.restassured.builder.ResponseSpecBuilder;
+import io.restassured.specification.RequestSpecification;
+import io.restassured.specification.ResponseSpecification;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -16,6 +21,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
 public abstract class BaseTest {
+    static ResponseSpecification positiveResponseSpecification;
+    static RequestSpecification requestWithAuth;
+
+    static Map<String, String> headers = new HashMap<>();
     static Properties properties = new Properties();
     static String token;
     static String username;
@@ -27,7 +36,9 @@ public abstract class BaseTest {
         getProperties();
         token    = properties.getProperty("token");
         username = properties.getProperty("username");
-        //headers.put("Authorization", "Bearer " + token);
+
+        positiveResponseSpecification = new ResponseSpecBuilder()
+                .expectBody
     }
     private static void getProperties(){
       try(InputStream output = new FileInputStream("src/test/resources/application.properties")){
