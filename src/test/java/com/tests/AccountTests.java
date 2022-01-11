@@ -18,7 +18,7 @@ public class AccountTests extends BaseTest {
 
     @Test
     void getAccountInfoTest() {
-        given(requestWithAuth,positiveResponseSpecification).get("https://api.imgur.com/3/account/{username}",username);
+        given(requestWithAuth,positiveResponseSpecification).get("/account/{username}",username);
     }
     @Test
     void getAccountInfoWithAssertionsAfterTest() {
