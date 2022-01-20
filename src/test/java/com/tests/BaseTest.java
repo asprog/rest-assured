@@ -7,10 +7,12 @@ import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
+import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,10 +42,10 @@ public abstract class BaseTest {
     static void beforeAll() {
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
         RestAssured.filters(new AllureRestAssured());
-        RestAssured.baseURI = "https://api.imgur.com/3";
         getProperties();
         token    = properties.getProperty("token");
         username = properties.getProperty("username");
+        RestAssured.baseURI = properties.getProperty("baseuri");
 
         positiveResponseSpecification = new ResponseSpecBuilder()
                 .expectBody("status",equalTo(200))
@@ -62,6 +64,15 @@ public abstract class BaseTest {
       }catch (IOException e){
         e.printStackTrace();
       }
+    }
+     byte[] getFileContent(String PATH_TO_IMAGE){
+        byte[] byteArray = new byte[8];
+        try {
+            byteArray = FileUtils.readFileToByteArray(new File(PATH_TO_IMAGE));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return byteArray;
     }
     /*@Test
     void getAccountInfoTest() {

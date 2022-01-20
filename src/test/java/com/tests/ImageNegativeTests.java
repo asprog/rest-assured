@@ -24,7 +24,7 @@ public class ImageNegativeTests extends BaseTest{
 
   @BeforeEach
   void beforeTest(){
-    byte[] byteArray = getFileContent();
+    byte[] byteArray = getFileContent(PATH_TO_IMAGE);
     encodedFile = Base64.getEncoder().encodeToString(byteArray);
   }
   @Test
@@ -65,14 +65,6 @@ public class ImageNegativeTests extends BaseTest{
   void tearDown(){
   }
 
-  private byte[] getFileContent(){
-    byte[] byteArray = new byte[8];
-    try {
-      byteArray = FileUtils.readFileToByteArray(new File(PATH_TO_IMAGE));
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    return byteArray;
-  }
+
 
 }
